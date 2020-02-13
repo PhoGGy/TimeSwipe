@@ -1,1 +1,21 @@
+name: Compile Driver
 
+on: [push]
+
+jobs:
+  compile_arch:
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        path: arch
+    - name: Compile Arch
+      run: |
+        docker run --rm -v $GITHUB_WORKSPACE/arch/driver:/usr/src  timeswipe:arch /usr/src/build_arch.sh
+    - uses: actions/checkout@v2
+      with:
+        path: debian
+    - name: Compile Debian
+      run: |
+        docker run --rm -v $GITHUB_WORKSPACE/debian/driver:/usr/src  timeswipe:deb /usr/src/build_deb.sh
