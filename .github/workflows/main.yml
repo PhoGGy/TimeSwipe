@@ -16,7 +16,7 @@ jobs:
         path: pages
     - name: Generate documentation
       run: |
-        apt-get -y doxygen
+        apt-get install doxygen -y
         cd $GITHUB_WORKSPACE/main/driver
         doxygen Doxyfile
     - name: Copy to gh-pages branch
