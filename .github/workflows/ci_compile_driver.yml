@@ -10,12 +10,18 @@ jobs:
     - uses: actions/checkout@v2
       with:
         path: arch
+    - name: Create Arch Docker Image
+      run: |
+        docker build $GITHUB_WORKSPACE/arch/driver/Dockerfile.arch -t timeswipe:arch
     - name: Compile Arch
       run: |
         docker run --rm -v $GITHUB_WORKSPACE/arch/driver:/usr/src  timeswipe:arch /usr/src/build_arch.sh
     - uses: actions/checkout@v2
       with:
         path: debian
+    - name: Create Debian Docker Image
+      run: |
+        docker build $GITHUB_WORKSPACE/debian/driver/Dockerfile.ubuntu -t timeswipe:deb
     - name: Compile Debian
       run: |
         docker run --rm -v $GITHUB_WORKSPACE/debian/driver:/usr/src  timeswipe:deb /usr/src/build_deb.sh
