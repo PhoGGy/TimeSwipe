@@ -23,7 +23,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/pages
         pwd
-        rm -rf . #clean branch
+        rm -rf * #clean branch
         cp -R $GITHUB_WORKSPACE/main/driver/html/. .
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
