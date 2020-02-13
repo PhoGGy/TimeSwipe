@@ -12,7 +12,7 @@ jobs:
         path: arch
     - name: Create Arch Docker Image
       run: |
-        docker build -t timeswipe:arch -f Dockerfile.arch $GITHUB_WORKSPACE/arch/driver
+        docker build -t timeswipe:arch -f $GITHUB_WORKSPACE/arch/driver/Dockerfile.arch $GITHUB_WORKSPACE/arch/driver
     - name: Compile Arch
       run: |
         docker run --rm -v $GITHUB_WORKSPACE/arch/driver:/usr/src  timeswipe:arch /usr/src/build_arch.sh
@@ -21,7 +21,7 @@ jobs:
         path: debian
     - name: Create Debian Docker Image
       run: |
-        docker build -t timeswipe:deb -f Dockerfile.ubuntu $GITHUB_WORKSPACE/debian/driver
+        docker build -t timeswipe:deb -f $GITHUB_WORKSPACE/arch/driver/Dockerfile.ubuntu $GITHUB_WORKSPACE/debian/driver
     - name: Compile Debian
       run: |
         docker run --rm -v $GITHUB_WORKSPACE/debian/driver:/usr/src  timeswipe:deb /usr/src/build_deb.sh
