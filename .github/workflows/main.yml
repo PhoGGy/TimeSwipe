@@ -16,14 +16,14 @@ jobs:
         path: pages
     - name: Generate documentation
       run: |
-        apt-get install doxygen -y
+        sudo apt-get install doxygen -y
         cd $GITHUB_WORKSPACE/main/driver
         doxygen Doxyfile
     - name: Copy to gh-pages branch
       run: |
         cd $GITHUB_WORKSPACE/pages
         git rm . #clean branch
-        cp -r $GITHUB_WORKSPACE/main/driver/html/. .
+        cp -R $GITHUB_WORKSPACE/main/driver/html/. .
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git commit -m "Updating Documentation" -a
