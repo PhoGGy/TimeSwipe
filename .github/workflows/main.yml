@@ -1,0 +1,36 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build_doxygen:
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        path: main
+    - uses: actions/checkout@v2
+      with:
+        ref: gh-pages
+        path: pages
+    - name: Generate documentation
+      run: |
+        apt-get -y doxygen
+        cd $GITHUB_WORKSPACE/main/driver
+        doxygen Doxyfile
+    - name: Copy to gh-pages branch
+      run: |
+        cd $GITHUB_WORKSPACE/pages
+        git rm . #clean branch
+        cp -r $GITHUB_WORKSPACE/main/driver/html/. .
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "Updating Documentation" -a
+        
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: gh-pages
+        directory: $GITHUB_WORKSPACE/pages
