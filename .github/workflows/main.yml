@@ -1,4 +1,4 @@
-name: CI
+name: Driver Doxygen
 
 on: [push]
 
@@ -9,11 +9,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        path: main
+        path: source
     - name: Generate documentation
       run: |
         sudo apt-get install doxygen -y
-        cd $GITHUB_WORKSPACE/main/driver
+        cd $GITHUB_WORKSPACE/source/driver
         doxygen Doxyfile
     - uses: actions/checkout@v2
       with:
@@ -22,9 +22,8 @@ jobs:
     - name: Copy to gh-pages branch
       run: |
         cd $GITHUB_WORKSPACE/pages
-        pwd
         rm -rf * #clean branch
-        cp -R $GITHUB_WORKSPACE/main/driver/html/. .
+        cp -R $GITHUB_WORKSPACE/source/driver/html/. .
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
